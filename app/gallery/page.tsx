@@ -21,8 +21,8 @@ export default function GalleryPage() {
           </p>
           <h1 className="mt-3 font-serif text-5xl text-foreground">Gallery</h1>
           <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-            Mature, multi-stemmed Rhapis Palms — every plant a minimum of 2 metres
-            tall, with most taller. Grown right here on the Sunshine Coast.
+            Mature, multi-stemmed Rhapis Palms — averaging around 2 metres tall.
+            Grown right here on the Sunshine Coast.
           </p>
         </div>
 

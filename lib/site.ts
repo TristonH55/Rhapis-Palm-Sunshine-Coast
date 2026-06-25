@@ -56,7 +56,7 @@ export const FEATURES = [
 export const FAQ = [
   {
     q: "How big are the plants?",
-    a: "Every plant is a minimum of 2 metres tall — many are taller, so the average is well above 2m. These are mature, well-established, multi-stemmed specimens. As each is a living plant, exact heights vary.",
+    a: "Our plants average around 2 metres tall. These are mature, well-established, multi-stemmed specimens. As each is a living plant, exact heights vary.",
   },
   {
     q: "Is it pickup only?",

@@ -114,10 +114,9 @@ export default async function Home() {
             <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
               Mature, locally grown Lady Palms —{" "}
               <strong className="text-foreground">
-                every plant a minimum of 2 metres tall
+                averaging around 2 metres tall
               </strong>
-              , with most taller. The perfect blend of tropical sophistication and
-              easy-care living.
+              . The perfect blend of tropical sophistication and easy-care living.
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-4">
@@ -163,6 +162,9 @@ export default async function Home() {
           <Separator orientation="vertical" className="hidden h-4 sm:block" />
           <span className="flex items-center gap-2"><MapPin className="size-4 text-primary" /> Sunshine Coast pickup</span>
         </div>
+        <p className="px-6 pb-4 text-center text-xs text-muted-foreground/80">
+          *Heights vary as each is a living plant.
+        </p>
       </section>
 
       {/* ===== PRODUCT CARD (the buy unit) ===== */}
@@ -171,7 +173,7 @@ export default async function Home() {
           <div className="mb-10 text-center">
             <h2 className="font-serif text-4xl text-foreground">Reserve your Rhapis Palm</h2>
             <p className="mt-3 text-muted-foreground">
-              One premium specimen · minimum 2m tall · locally grown
+              One premium specimen · average around 2m tall · locally grown
             </p>
           </div>
 
@@ -205,7 +207,7 @@ export default async function Home() {
                 </div>
 
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2"><Check className="size-4 text-primary" /> Every plant a minimum of 2m tall</li>
+                  <li className="flex items-center gap-2"><Check className="size-4 text-primary" /> Averaging around 2m tall</li>
                   <li className="flex items-center gap-2"><Check className="size-4 text-primary" /> Hardy, shade-tolerant & low-maintenance</li>
                   <li className="flex items-center gap-2"><Check className="size-4 text-primary" /> Perfect indoors or outdoors</li>
                 </ul>
@@ -275,8 +277,8 @@ export default async function Home() {
                 </span>
               </div>
               <p className="text-sm text-muted-foreground">
-                That&apos;s {formatAud(BULK.priceCents / BULK.qty)} per palm, each a
-                minimum of 2m tall. Pickup only — Sunshine Coast.
+                That&apos;s {formatAud(BULK.priceCents / BULK.qty)} per palm, each
+                averaging around 2m tall. Pickup only — Sunshine Coast.
               </p>
               <BuyButton
                 bundle="bulk"

@@ -40,8 +40,8 @@ export async function POST(req: Request) {
     ? `Rhapis Palms — Bulk pack of ${BULK.qty}`
     : product.name;
   const description = isBulk
-    ? `${BULK.qty} mature Rhapis (Lady) Palms, each 2m+. Pickup only — Sunshine Coast.`
-    : "Mature Rhapis (Lady) Palm, 2m+. Pickup only — Sunshine Coast.";
+    ? `${BULK.qty} mature Rhapis (Lady) Palms, each averaging ~2m. Pickup only — Sunshine Coast.`
+    : "Mature Rhapis (Lady) Palm, averaging ~2m. Pickup only — Sunshine Coast.";
 
   const session = await stripe.checkout.sessions.create({
     mode: "payment",

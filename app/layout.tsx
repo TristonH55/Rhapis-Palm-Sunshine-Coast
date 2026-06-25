@@ -19,7 +19,7 @@ const sans = Geist({ subsets: ["latin"], variable: "--font-sans" });
 export const metadata: Metadata = {
   title: "Rhapis Palm — Sunshine Coast | Premium Lady Palms",
   description:
-    "Mature, locally grown Rhapis (Lady) Palms on the Sunshine Coast — every plant a minimum of 2m tall. Elegant, resilient, evergreen. $1,200 AUD each or 10 for $9,800, pickup only. Limited stock.",
+    "Mature, locally grown Rhapis (Lady) Palms on the Sunshine Coast — averaging around 2m tall. Elegant, resilient, evergreen. $1,200 AUD each or 10 for $9,800, pickup only. Limited stock.",
 };
 
 export default async function RootLayout({

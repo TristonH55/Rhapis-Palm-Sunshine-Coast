@@ -75,7 +75,7 @@ export function HeroCarousel() {
       </div>
 
       <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-background/90 px-4 py-2 text-sm font-medium shadow-md backdrop-blur">
-        <Ruler className="size-4 text-primary" /> Every plant 2m+ · avg taller
+        <Ruler className="size-4 text-primary" /> Average around 2m
       </div>
     </div>
   );
