@@ -1,7 +1,7 @@
 export const BUSINESS = {
   name: "Rhapis Palms",
   region: "Sunshine Coast, QLD",
-  email: "hello@rhapispalms.com.au", // update to your real address
+  email: "albliz@bigpond.com",
   phone: "+61 0415 224 473",
   phoneHref: "tel:+61415224473",
   address: "Alexandra Headland, QLD, Sunshine Coast, 4557",

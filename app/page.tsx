@@ -157,7 +157,7 @@ export default async function Home() {
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6 py-5 text-sm font-medium text-muted-foreground">
           <span className="flex items-center gap-2"><Sprout className="size-4 text-primary" /> Locally grown</span>
           <Separator orientation="vertical" className="hidden h-4 sm:block" />
-          <span className="flex items-center gap-2"><Ruler className="size-4 text-primary" /> Minimum 2m (avg taller)</span>
+          <span className="flex items-center gap-2"><Ruler className="size-4 text-primary" /> Average around 2m*</span>
           <Separator orientation="vertical" className="hidden h-4 sm:block" />
           <span className="flex items-center gap-2"><ShieldCheck className="size-4 text-primary" /> Hardy & low-care</span>
           <Separator orientation="vertical" className="hidden h-4 sm:block" />
