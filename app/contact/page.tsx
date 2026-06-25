@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MapPin, Mail, Truck, Clock } from "lucide-react";
+import { MapPin, Mail, Phone, Truck } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { BUSINESS } from "@/lib/site";
 import { ContactForm } from "./contact-form";
@@ -11,10 +11,10 @@ export const metadata: Metadata = {
 };
 
 const INFO = [
-  { icon: MapPin, title: "Location", body: BUSINESS.region },
+  { icon: Phone, title: "Phone", body: BUSINESS.phone, href: BUSINESS.phoneHref },
+  { icon: Mail, title: "Email", body: BUSINESS.email, href: `mailto:${BUSINESS.email}` },
+  { icon: MapPin, title: "Location", body: BUSINESS.address },
   { icon: Truck, title: "Pickup only", body: "Arranged after purchase — bring a suitable vehicle." },
-  { icon: Mail, title: "Email", body: BUSINESS.email },
-  { icon: Clock, title: "Response", body: "We usually reply within a day." },
 ];
 
 export default function ContactPage() {
@@ -49,7 +49,16 @@ export default function ContactPage() {
                   </span>
                   <div>
                     <h3 className="font-medium text-foreground">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.body}</p>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        className="text-sm text-muted-foreground hover:text-foreground"
+                      >
+                        {item.body}
+                      </a>
+                    ) : (
+                      <p className="text-sm text-muted-foreground">{item.body}</p>
+                    )}
                   </div>
                 </CardContent>
               </Card>

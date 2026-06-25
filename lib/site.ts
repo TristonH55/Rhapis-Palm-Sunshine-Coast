@@ -2,6 +2,20 @@ export const BUSINESS = {
   name: "Rhapis Palms",
   region: "Sunshine Coast, QLD",
   email: "hello@rhapispalms.com.au", // update to your real address
+  phone: "+61 0415 224 473",
+  phoneHref: "tel:+61415224473",
+  address: "Alexandra Headland, QLD, Sunshine Coast, 4557",
+};
+
+// Total ever offered (for "X of TOTAL" scarcity messaging). Live remaining
+// comes from the database.
+export const TOTAL_STOCK = 37;
+
+// Single plant + bulk/trade bundle.
+export const SINGLE_PRICE_CENTS = 120000; // $1,200 AUD
+export const BULK = {
+  qty: 10,
+  priceCents: 980000, // $9,800 AUD for 10 (save $2,200)
 };
 
 export const GALLERY = [
@@ -42,11 +56,15 @@ export const FEATURES = [
 export const FAQ = [
   {
     q: "How big are the plants?",
-    a: "These are mature, well-established specimens averaging around 2 metres tall — multi-stemmed and full. Sizes vary slightly as each is a living plant.",
+    a: "Every plant is a minimum of 2 metres tall — many are taller, so the average is well above 2m. These are mature, well-established, multi-stemmed specimens. As each is a living plant, exact heights vary.",
   },
   {
     q: "Is it pickup only?",
-    a: "Yes. All plants are pickup only from the Sunshine Coast. After your purchase we'll contact you using the phone and email from checkout to arrange a convenient time. Please bring a suitable vehicle.",
+    a: "Yes. All plants are pickup only from Alexandra Headland on the Sunshine Coast. After your purchase we'll contact you using the phone and email from checkout to arrange a convenient time. Please bring a suitable vehicle.",
+  },
+  {
+    q: "Do you offer bulk or trade pricing?",
+    a: "Yes — buy 10 palms for $9,800 AUD (a saving of $2,200). Ideal for hotels, resorts, property developers and stylists. Use the bulk option on this page, or contact us for larger volumes.",
   },
   {
     q: "How do I pay?",
@@ -55,10 +73,6 @@ export const FAQ = [
   {
     q: "Are they easy to care for?",
     a: "Very. Rhapis Palms are one of the most forgiving palms you can grow — they tolerate shade, handle indoor conditions well and need minimal attention. See our Plant Care page for a full guide.",
-  },
-  {
-    q: "How many are available?",
-    a: "We only have 20 of these premium mature specimens. Stock updates live on this page as they sell.",
   },
 ];
 

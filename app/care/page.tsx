@@ -116,8 +116,9 @@ export default function CarePage() {
           <p className="mt-6 text-center text-lg leading-relaxed text-muted-foreground">
             Every Rhapis Palm we sell is grown locally on the Sunshine Coast and
             acclimatised to our conditions. These are mature, well-established
-            specimens — not seedlings — averaging around 2 metres tall, ready to make
-            an immediate statement in your home or garden.
+            specimens — not seedlings — with every plant a minimum of 2 metres tall
+            (most are taller), ready to make an immediate statement in your home or
+            garden.
           </p>
           <div className="mt-10">
             <Accordion>

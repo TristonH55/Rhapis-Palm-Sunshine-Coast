@@ -10,9 +10,20 @@ import {
   ArrowRight,
   Sprout,
   Ruler,
+  Hotel,
+  Building2,
+  Sparkles,
+  Flame,
 } from "lucide-react";
 import { getProduct } from "@/lib/db";
-import { FEATURES, FAQ, GALLERY, HERO_IMAGE, formatAud } from "@/lib/site";
+import {
+  FEATURES,
+  FAQ,
+  GALLERY,
+  TOTAL_STOCK,
+  BULK,
+  formatAud,
+} from "@/lib/site";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -24,23 +35,50 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { BuyButton } from "@/components/buy-button";
+import { HeroCarousel } from "@/components/hero-carousel";
 import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
 
 const FEATURE_ICONS = { sun: Sun, shield: ShieldCheck, home: HomeIcon, leaf: Leaf };
 
-function StockBadge({ stock }: { stock: number }) {
+const USE_CASES = [
+  {
+    icon: Hotel,
+    title: "Hotels & resorts",
+    body: "Make an instant statement in foyers, lobbies and pool surrounds with mature, resort-grade greenery.",
+  },
+  {
+    icon: Building2,
+    title: "Property developers",
+    body: "Finish new developments with established palms that look complete on day one — no waiting years to grow in.",
+  },
+  {
+    icon: Sparkles,
+    title: "Stylists & corporate",
+    body: "Premium feature plants for home staging, corporate fit-outs and styled interiors that photograph beautifully.",
+  },
+];
+
+function StockBadge({ stock, hurry = false }: { stock: number; hurry?: boolean }) {
   const soldOut = stock <= 0;
   return (
-    <Badge variant="outline" className="gap-1.5 border-primary/30 text-foreground">
+    <Badge
+      variant="outline"
+      className={cn(
+        "gap-1.5 border-primary/30 text-foreground",
+        hurry && !soldOut && "border-gold/50 text-gold-foreground"
+      )}
+    >
       <span
         className={cn(
           "size-1.5 rounded-full",
-          soldOut ? "bg-muted-foreground" : "bg-primary"
+          soldOut ? "bg-muted-foreground" : hurry ? "bg-gold" : "bg-primary"
         )}
       />
-      {soldOut ? "Sold out" : `Only ${stock} of 20 remaining`}
+      {soldOut
+        ? "Sold out"
+        : `Only ${stock} of ${TOTAL_STOCK} left${hurry ? " — hurry!" : ""}`}
     </Badge>
   );
 }
@@ -49,13 +87,15 @@ export default async function Home() {
   const product = await getProduct();
   const stock = product?.stock ?? 0;
   const price = product ? formatAud(product.price_cents) : "$1,200";
+  const bulkPrice = formatAud(BULK.priceCents);
+  const bulkSaving = formatAud(BULK.qty * (product?.price_cents ?? 120000) - BULK.priceCents);
   const soldOut = stock <= 0;
+  const bulkAvailable = stock >= BULK.qty;
 
   return (
     <main className="flex flex-col">
       {/* ===== HERO (split) ===== */}
       <section className="relative overflow-hidden">
-        {/* decorative blobs */}
         <div className="pointer-events-none absolute -top-24 -right-24 size-96 rounded-full bg-accent/50 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-32 -left-24 size-96 rounded-full bg-secondary/60 blur-3xl" />
 
@@ -72,22 +112,25 @@ export default async function Home() {
               </span>
             </h1>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-muted-foreground">
-              Mature, locally grown Lady Palms — averaging around{" "}
-              <strong className="text-foreground">2 metres tall</strong>. The
-              perfect blend of tropical sophistication and easy-care living.
+              Mature, locally grown Lady Palms —{" "}
+              <strong className="text-foreground">
+                every plant a minimum of 2 metres tall
+              </strong>
+              , with most taller. The perfect blend of tropical sophistication and
+              easy-care living.
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-4">
               <span className="font-serif text-4xl font-semibold text-foreground">
                 {price}
-                <span className="ml-1 align-middle text-base font-sans font-normal text-muted-foreground">
+                <span className="ml-1 align-middle font-sans text-base font-normal text-muted-foreground">
                   AUD
                 </span>
               </span>
-              <StockBadge stock={stock} />
+              <StockBadge stock={stock} hurry />
             </div>
 
-            <div id="buy-hero" className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <BuyButton soldOut={soldOut} />
               <Link
                 href="/gallery"
@@ -97,28 +140,14 @@ export default async function Home() {
               </Link>
             </div>
             <p className="mt-4 flex items-center gap-1.5 text-sm text-muted-foreground">
-              <MapPin className="size-4 text-primary" /> Pickup only — Sunshine Coast
+              <MapPin className="size-4 text-primary" /> Pickup only — Alexandra
+              Headland, Sunshine Coast
             </p>
           </div>
 
-          {/* right: framed photo */}
+          {/* right: carousel */}
           <div className="order-1 lg:order-2">
-            <div className="relative mx-auto max-w-md">
-              <div className="absolute -inset-4 rounded-[2rem] bg-primary/10 blur-2xl" />
-              <div className="relative overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-xl">
-                <Image
-                  src={HERO_IMAGE}
-                  alt="Mature Rhapis Palm specimen"
-                  width={900}
-                  height={1100}
-                  priority
-                  className="h-[26rem] w-full object-cover sm:h-[32rem]"
-                />
-              </div>
-              <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-background/90 px-4 py-2 text-sm font-medium shadow-md backdrop-blur">
-                <Ruler className="size-4 text-primary" /> ~2m mature specimen
-              </div>
-            </div>
+            <HeroCarousel />
           </div>
         </div>
       </section>
@@ -128,7 +157,7 @@ export default async function Home() {
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-10 gap-y-3 px-6 py-5 text-sm font-medium text-muted-foreground">
           <span className="flex items-center gap-2"><Sprout className="size-4 text-primary" /> Locally grown</span>
           <Separator orientation="vertical" className="hidden h-4 sm:block" />
-          <span className="flex items-center gap-2"><Ruler className="size-4 text-primary" /> ~2m mature</span>
+          <span className="flex items-center gap-2"><Ruler className="size-4 text-primary" /> Minimum 2m (avg taller)</span>
           <Separator orientation="vertical" className="hidden h-4 sm:block" />
           <span className="flex items-center gap-2"><ShieldCheck className="size-4 text-primary" /> Hardy & low-care</span>
           <Separator orientation="vertical" className="hidden h-4 sm:block" />
@@ -142,7 +171,7 @@ export default async function Home() {
           <div className="mb-10 text-center">
             <h2 className="font-serif text-4xl text-foreground">Reserve your Rhapis Palm</h2>
             <p className="mt-3 text-muted-foreground">
-              One premium specimen · approx. 2m tall · locally grown
+              One premium specimen · minimum 2m tall · locally grown
             </p>
           </div>
 
@@ -172,11 +201,11 @@ export default async function Home() {
                     {price}
                   </span>
                   <span className="text-sm text-muted-foreground">AUD</span>
-                  <StockBadge stock={stock} />
+                  <StockBadge stock={stock} hurry />
                 </div>
 
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2"><Check className="size-4 text-primary" /> Locally grown on the Sunshine Coast</li>
+                  <li className="flex items-center gap-2"><Check className="size-4 text-primary" /> Every plant a minimum of 2m tall</li>
                   <li className="flex items-center gap-2"><Check className="size-4 text-primary" /> Hardy, shade-tolerant & low-maintenance</li>
                   <li className="flex items-center gap-2"><Check className="size-4 text-primary" /> Perfect indoors or outdoors</li>
                 </ul>
@@ -189,6 +218,87 @@ export default async function Home() {
                 </div>
               </CardContent>
             </div>
+          </Card>
+        </div>
+      </section>
+
+      {/* ===== TRADE / BULK + CORPORATE USE CASES ===== */}
+      <section id="bulk" className="scroll-mt-20 bg-primary px-6 py-20 text-primary-foreground">
+        <div className="mx-auto max-w-6xl">
+          <div className="text-center">
+            <p className="flex items-center justify-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] text-primary-foreground/70">
+              <Building2 className="size-4" /> Trade & bulk
+            </p>
+            <h2 className="mt-3 font-serif text-4xl text-primary-foreground">
+              Premium palms for hotels, developers & stylists
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-primary-foreground/80">
+              Mature, resort-grade Rhapis Palms make an instant impression — no
+              waiting years for them to establish. Perfect for commercial and
+              styled spaces.
+            </p>
+          </div>
+
+          {/* use cases */}
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {USE_CASES.map((u) => (
+              <div
+                key={u.title}
+                className="rounded-2xl bg-primary-foreground/5 p-6 ring-1 ring-primary-foreground/10"
+              >
+                <span className="flex size-11 items-center justify-center rounded-xl bg-primary-foreground/10 text-primary-foreground">
+                  <u.icon className="size-5" />
+                </span>
+                <h3 className="mt-4 font-serif text-xl text-primary-foreground">{u.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-primary-foreground/75">
+                  {u.body}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* bulk deal */}
+          <Card className="mx-auto mt-12 max-w-2xl text-center">
+            <CardContent className="flex flex-col items-center gap-4 p-8">
+              <Badge className="gap-1.5 bg-gold text-gold-foreground">
+                <Flame className="size-3.5" /> Best value
+              </Badge>
+              <h3 className="font-serif text-3xl text-foreground">
+                Bulk pack — {BULK.qty} palms
+              </h3>
+              <div className="flex flex-wrap items-end justify-center gap-3">
+                <span className="font-serif text-5xl font-semibold text-foreground">
+                  {bulkPrice}
+                </span>
+                <span className="mb-1 text-sm text-muted-foreground">
+                  AUD for {BULK.qty} · save {bulkSaving}
+                </span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                That&apos;s {formatAud(BULK.priceCents / BULK.qty)} per palm, each a
+                minimum of 2m tall. Pickup only — Sunshine Coast.
+              </p>
+              <BuyButton
+                bundle="bulk"
+                soldOut={!bulkAvailable}
+                label={`Buy ${BULK.qty} for ${bulkPrice} AUD`}
+                className="mt-2 w-full sm:w-auto"
+              />
+              {!bulkAvailable && !soldOut && (
+                <p className="text-xs text-muted-foreground">
+                  Fewer than {BULK.qty} left — please{" "}
+                  <Link href="/contact" className="underline">contact us</Link> for
+                  availability.
+                </p>
+              )}
+              <p className="text-xs text-muted-foreground">
+                Need more than {BULK.qty}?{" "}
+                <Link href="/contact" className="text-primary underline">
+                  Contact us for volume pricing
+                </Link>
+                .
+              </p>
+            </CardContent>
           </Card>
         </div>
       </section>
@@ -280,25 +390,29 @@ export default async function Home() {
       </section>
 
       {/* ===== FINAL CTA BAND ===== */}
-      <section className="bg-primary px-6 py-20 text-primary-foreground">
+      <section className="bg-foreground px-6 py-20 text-background">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="font-serif text-4xl text-primary-foreground">
-            Bring the tropics home
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-primary-foreground/80">
+          <h2 className="font-serif text-4xl text-background">Bring the tropics home</h2>
+          <p className="mx-auto mt-4 max-w-md text-background/80">
             {soldOut
-              ? "All 20 have now sold — thank you to everyone."
-              : `Only ${stock} of these premium mature palms remain. ${price} AUD, pickup only.`}
+              ? "All have now sold — thank you to everyone."
+              : `Only ${stock} of ${TOTAL_STOCK} premium mature palms remain. ${price} AUD each, or ${bulkPrice} for ${BULK.qty}. Pickup only.`}
           </p>
-          <div className="mt-8 flex justify-center">
-            <Link
-              href="/#buy"
-              className={cn(
-                buttonVariants({ size: "lg", variant: "secondary" })
-              )}
-            >
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/#buy" className={cn(buttonVariants({ size: "lg", variant: "secondary" }))}>
               {soldOut ? "View details" : "Reserve yours now"} <ArrowRight className="size-4" />
             </Link>
+            {!soldOut && bulkAvailable && (
+              <Link
+                href="/#bulk"
+                className={cn(
+                  buttonVariants({ size: "lg", variant: "outline" }),
+                  "border-background/30 bg-transparent text-background hover:bg-background/10 hover:text-background"
+                )}
+              >
+                See bulk deal
+              </Link>
+            )}
           </div>
         </div>
       </section>

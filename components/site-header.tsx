@@ -90,7 +90,7 @@ export function SiteHeader({ stock }: { stock: number | null }) {
                   soldOut ? "bg-muted-foreground" : "bg-primary"
                 )}
               />
-              {soldOut ? "Sold out" : `${stock} of 20 left`}
+              {soldOut ? "Sold out" : `${stock} left — hurry!`}
             </Badge>
           )}
 

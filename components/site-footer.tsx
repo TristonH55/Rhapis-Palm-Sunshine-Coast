@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Leaf, MapPin, Mail } from "lucide-react";
+import { Leaf, MapPin, Mail, Phone } from "lucide-react";
+import { BUSINESS } from "@/lib/site";
 
 export function SiteFooter() {
   return (
@@ -29,16 +30,25 @@ export function SiteFooter() {
         </div>
 
         <div>
-          <h3 className="font-serif text-base font-semibold">Pickup</h3>
+          <h3 className="font-serif text-base font-semibold">Pickup location</h3>
           <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
             <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
-            Pickup only — Sunshine Coast, QLD. We arrange a time after purchase.
+            <span>
+              {BUSINESS.address}
+              <span className="block">Pickup only — arranged after purchase.</span>
+            </span>
           </p>
         </div>
 
         <div>
           <h3 className="font-serif text-base font-semibold">Get in touch</h3>
           <p className="mt-3 flex items-start gap-2 text-sm text-muted-foreground">
+            <Phone className="mt-0.5 size-4 shrink-0 text-primary" />
+            <a href={BUSINESS.phoneHref} className="hover:text-foreground">
+              {BUSINESS.phone}
+            </a>
+          </p>
+          <p className="mt-2 flex items-start gap-2 text-sm text-muted-foreground">
             <Mail className="mt-0.5 size-4 shrink-0 text-primary" />
             <Link href="/contact" className="hover:text-foreground">
               Send us a message

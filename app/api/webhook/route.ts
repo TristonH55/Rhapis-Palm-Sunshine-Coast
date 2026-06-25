@@ -54,10 +54,12 @@ export async function POST(req: Request) {
     `) as { id: number }[];
 
     if (inserted.length > 0) {
+      // Decrement by the number of units purchased (1 for single, 10 for bulk).
+      const units = Math.max(1, parseInt(session.metadata?.units ?? "1", 10) || 1);
       await sql`
         UPDATE products
-        SET stock = stock - 1
-        WHERE slug = ${PRODUCT_SLUG} AND stock > 0
+        SET stock = GREATEST(stock - ${units}, 0)
+        WHERE slug = ${PRODUCT_SLUG}
       `;
     }
   }
